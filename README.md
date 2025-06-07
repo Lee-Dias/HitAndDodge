@@ -44,18 +44,15 @@ Então fiz com que a bala recebesse o `GameObject` que a disparava, para saber q
 ## Sistema de spawn dos jogadores
 
 Agora irei tratar dos pontos de spawn.  
-Para isso fui pesquisar e descobri uma forma de o fazer: criar um script que cria e faz spawn dos jogadores quando é iniciado um cliente.  
-Fiz dessa forma, mas, sendo honesto, como tive de tirar o prefab do jogador do `NetworkManager`, acredito que existam formas melhores como on spawn alterar a sua posição mas eu não conseguir encontrar como acredito que fosse com o override mas não encontrei.
+Para isso fiz essencialmente o que o prfessor fez mas em um script aparte.
 
-Mas o script essencialmente faz spawn manual com o `SpawnAsPlayerObject` Em vez de o `NetworkManager` criar o jogador automaticamente, este método instancia o jogador manualmente e associá-o ao cliente que se conectou.
+O script essencialmente faz spawn manual com o `SpawnAsPlayerObject` Em vez de o `NetworkManager` criar o jogador automaticamente, este método instancia o jogador manualmente e associá-o ao cliente que se conectou.
 
 O `NetworkManager` é usado para gerir callbacks importantes da conexão (`ConnectionApprovalCallback` e `OnClientConnectedCallback`).
 
 Usei o `ConnectionApprovalCallback` que é uma forma de validar e aprovar ou recusar conexões de clientes antes de os permitir entrar no jogo. Aqui, é usado para limitar o número máximo de jogadores a 2 e impedir que mais clientes entrem.
 
 E usei o `OnClientConnectedCallback` que faz um código quando um cliente se conecta e, neste caso, faz o spawn manual do jogador no servidor num ponto específico tendo em conta outros players que ja tenham spawnado.
-
-
 
 ---
 
@@ -127,9 +124,7 @@ E depois de tanto tempo a tentar eu sinceramente não sei o que era melhor deixa
 
 ## Descrição técnica do que foi implementado, assim como as técnicas usadas
 
-Este projeto implementa um sistema multiplayer para um jogo 2D com 2 personagens que se movem, atiram e teem vida, e utiliza o **Unity Netcode for GameObjects** para a sincronização da rede.
-
-
+- **Unity Netcode for GameObjects** para a sincronização da rede.
 - **NetworkSetup:** automatiza o start do servidor ou cliente conforme argumento de linha de comando.  
 - Técnicas principais usadas:  
 - **Client-side prediction:** para disparos, instanciando projéteis localmente enquanto a confirmação do servidor é aguardada.  
@@ -158,7 +153,7 @@ Este projeto implementa um sistema multiplayer para um jogo 2D com 2 personagens
 
 ## Instruções para experimentar num cenário LAN
 No GameObject chamado Network Manager, dentro do script UnityTransport.   
-É necessário preencher o Adress com o IPv4 do host, ou seja, o IP da máquina para a qual os clientes se vão conectar, e também definir o port. O IP é como se fosse uma casa e o port é como se fosse para o cliente saber para qual porta daquela casa ir para ir ter com o servidor. 
+É necessário preencher o Adress com o IPv4 do host, ou seja, o IP da máquina para a qual os clientes se vão conectar, e também definir um port(pode se deixar o default 7777). O IP é como se fosse uma casa e o port é como se fosse para o cliente saber para qual porta daquela casa ir para ir ter com o servidor. 
 O Allow Remote Connections tambem tem de estar ativo.  
 A forma de ter o IPv4 do host é abrir a linha de commandos e escrever "ipconfig"
 
