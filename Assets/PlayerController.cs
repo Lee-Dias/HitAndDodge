@@ -35,21 +35,17 @@ public class PlayerController : NetworkBehaviour
     {
         if (!IsLocalPlayer || !canMove) return;
 
-        // Movement input
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        // Flip player based on movement
         if (movement.x != 0)
         {
             lastMoveDirection = movement.x > 0 ? 1 : -1;
             transform.rotation = lastMoveDirection == 1 ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
         }
 
-        // Get mouse world position
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Handle shooting input
         if (Input.GetMouseButtonDown(0) && shotCooldown <= shotTime)
         {
             shotTime = 0;
@@ -62,7 +58,7 @@ public class PlayerController : NetworkBehaviour
                 FlipPlayer();
             }
 
-            animator.SetTrigger("Shoot"); // Animation triggers DoShoot
+            animator.SetTrigger("Shoot"); 
             //faz com que os outros players vejam a animação
             TriggerShootAnimationServerRpc();
         }

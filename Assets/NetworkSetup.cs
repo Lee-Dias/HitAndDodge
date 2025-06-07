@@ -144,7 +144,7 @@ static void SetWindowTitle(string title)
             .Where(s => s.enabled)
             .Select(s => s.path)
             .ToArray();
-        buildPlayerOptions.locationPathName = Path.Combine("Builds", "MPWyzard.exe");
+        buildPlayerOptions.locationPathName = Path.Combine("Builds", "HitAndDodge.exe");
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.None;
 
@@ -199,21 +199,21 @@ static void SetWindowTitle(string title)
     [MenuItem("Tools/Launch (Server) _F11", priority = 30)]
     public static void Launch1()
     {
-        Run("Builds\\MPWyzard.exe", "--server");
+        Run("Builds\\HitAndDodge.exe", "--server");
     }
 
     [MenuItem("Tools/Launch (Server + Client)", priority = 40)]
     public static void Launch2()
     {
-        Run("Builds\\MPWyzard.exe", "--server");
-        Run("Builds\\MPWyzard.exe", "");
+        Run("Builds\\HitAndDodge.exe", "--server");
+        Run("Builds\\HitAndDodge.exe", "");
     }
     
     [MenuItem("Tools/Close All", priority = 100)]
     public static void CloseAll()
     {
         // Get all processes with the specified name
-        Process[] processes = Process.GetProcessesByName("MPWyzard");
+        Process[] processes = Process.GetProcessesByName("HitAndDodge");
 
         foreach (var process in processes)
         {
