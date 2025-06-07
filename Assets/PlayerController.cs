@@ -13,8 +13,6 @@ public class PlayerController : NetworkBehaviour
     private SpriteRenderer playerSpriteRenderer;
     [SerializeField]
     private float shotCooldown = 2f;
-    [SerializeField]
-    private bool useClientSidePrediction;
 
     private float shotTime;
     private Rigidbody2D rb;
@@ -24,13 +22,11 @@ public class PlayerController : NetworkBehaviour
 
     private int lastMoveDirection = 1;
 
-    private PlayerShooting playerShooting;
     private PlayerShootingClientSidePrediction playerShootingClientSidePrediction;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerShooting = GetComponent<PlayerShooting>();
         playerShootingClientSidePrediction = GetComponent<PlayerShootingClientSidePrediction>();
         shotTime = shotCooldown;
     }
@@ -95,10 +91,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (!IsLocalPlayer) return;
 
-        if (!useClientSidePrediction)
-            playerShooting.Shoot(mousePos);
-        else
-            playerShootingClientSidePrediction.Shoot(mousePos);
+        playerShootingClientSidePrediction.Shoot(mousePos);
     
 
         canMove = true;

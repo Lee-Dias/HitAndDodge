@@ -19,15 +19,17 @@ public class PlayerShootingClientSidePrediction : NetworkBehaviour
     }
     private void SpawnLocalPrediction(Vector2 targetPos)
     {
+        float spawnOffset = -1f;
         Vector2 direction = (targetPos - (Vector2)firePoint.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        GameObject bullet = Instantiate(bulletPrefabLocal, firePoint.position, Quaternion.Euler(0f, 0f, angle + 180));
+        Vector3 spawnPos = firePoint.position + (Vector3)(direction * spawnOffset);
+        GameObject bullet = Instantiate(bulletPrefabLocal, spawnPos, Quaternion.Euler(0f, 0f, angle + 180));
         bullet.GetComponent<BulletPrediction>().shooter = gameObject;
         bullet.GetComponent<BulletPrediction>().Initialize(direction, bulletSpeed);
 
-        ShootServerRpc(bullet.transform.position, bullet.transform.rotation);
-        Destroy(bullet, 3f); // auto-destruir localmente
+        ShootServerRpc(spawnPos, bullet.transform.rotation);
+        Destroy(bullet, 3f);
     }
 
     [ServerRpc]
@@ -38,9 +40,10 @@ public class PlayerShootingClientSidePrediction : NetworkBehaviour
 
     private void SpawnNetworkBullet(Vector3 position, Quaternion rotation)
     {
+        
         Vector2 direction = rotation * Vector2.left;
 
-        GameObject bullet = Instantiate(bulletPrefabNetwork, position, rotation);
+        GameObject bullet = Instantiate(bulletPrefabNetwork, firePoint.position, rotation);
 
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.Initialize(direction, bulletSpeed);
