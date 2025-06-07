@@ -3,8 +3,10 @@ using Unity.Netcode;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField]
+    private GameObject playerPrefab;
+    [SerializeField]
+    private Transform[] spawnPoints;
 
     private int nextSpawnIndex = 0;
 
@@ -28,7 +30,7 @@ public class PlayerSpawnManager : MonoBehaviour
         else
         {
             response.Approved = true;
-            response.CreatePlayerObject = false; // ← ainda queremos controlar a criação manualmente
+            response.CreatePlayerObject = false; 
             response.Pending = false;
             Debug.Log("Conexão aprovada.");
         }
@@ -37,8 +39,10 @@ public class PlayerSpawnManager : MonoBehaviour
     private void OnClientConnected(ulong clientId)
     {
         if (!NetworkManager.Singleton.IsServer) return;
+        if (nextSpawnIndex > spawnPoints.Length)
+            nextSpawnIndex = spawnPoints.Length;
 
-        Transform spawnPoint = spawnPoints[nextSpawnIndex % spawnPoints.Length];
+        Transform spawnPoint = spawnPoints[nextSpawnIndex];
         nextSpawnIndex++;
 
         GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);

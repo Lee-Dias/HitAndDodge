@@ -27,9 +27,4 @@ public class HealthDisplayUpdate : NetworkBehaviour
         fill.transform.localScale = new Vector3(p, 1f, 1f);
     }
 
-    public void UpdateHealth(int newHealth)
-    {
-        float p = Mathf.Clamp01((float)newHealth / (float)maxHealth);
-        fill.transform.localScale = new Vector3(p, 1f, 1f);
-    }
 }

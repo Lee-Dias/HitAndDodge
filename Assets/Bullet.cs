@@ -7,48 +7,43 @@ public class Bullet : NetworkBehaviour
     private float lifeTime = 3f;
     [SerializeField]
     private int damage = 20;
+    [SerializeField]
+    private float speed = 10f;
     [HideInInspector]
     public GameObject shooter;
 
-    private NetworkObject networkObject;
+    private Vector2 direction;
 
-
+    public void Initialize(Vector2 dir, float bulletSpeed)
+    {
+        direction = dir.normalized;
+        speed = bulletSpeed;
+    }
 
     private void Start()
     {
-        Debug.Log($"Bullet spawned. IsServer: {IsServer}, IsOwner: {IsOwner}, IsClient: {IsClient}");
-        // Destroy bullet after a few seconds
         Destroy(gameObject, lifeTime);
-        networkObject = GetComponent<NetworkObject>();
+    }
+
+    private void Update()
+    {
+        if (IsServer)
+        {
+            transform.position += (Vector3)(direction * speed * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsServer || collision.gameObject == shooter) return;
 
-        if (!IsServer) return;
-
-        if (collision.gameObject == shooter)
-        {
-            Debug.Log("Bullet ignored collision with shooter.");
-            return;
-        }
-
-
-        PlayerController playerController = collision.GetComponent<PlayerController>();
-        playerController.BlinkClientRpc();
-        playerController.Blink();
-        // Check if we hit a player (must have Health component)
         Health health = collision.GetComponent<Health>();
         if (health != null)
         {
+            PlayerController playerController = collision.GetComponent<PlayerController>();
+            playerController.BlinkClientRpc();
             health.TakeDamage(damage);
-            NetworkObject.Despawn(); // Despawn bullet over the network
+            GetComponent<NetworkObject>().Despawn();
         }
-
-
-        
-
-
-
     }
 }

@@ -4,17 +4,27 @@ public class BulletPrediction : MonoBehaviour
 {
     [SerializeField]
     private float lifeTime = 3f;
+    [SerializeField]
+    private float speed = 10f;
     [HideInInspector]
     public GameObject shooter;
 
-    private Rigidbody2D rb;
+    private Vector2 direction;
 
-
+    public void Initialize(Vector2 dir, float bulletSpeed)
+    {
+        direction = dir.normalized;
+        speed = bulletSpeed;
+    }
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         Destroy(gameObject, lifeTime);
+    }
+
+    private void Update()
+    {
+        transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,6 +34,5 @@ public class BulletPrediction : MonoBehaviour
         Health health = collision.GetComponent<Health>();
         if (health != null)
             Destroy(gameObject);
-        
     }
 }

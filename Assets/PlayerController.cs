@@ -67,8 +67,22 @@ public class PlayerController : NetworkBehaviour
             }
 
             animator.SetTrigger("Shoot"); // Animation triggers DoShoot
+            //faz com que os outros players vejam a animação
+            TriggerShootAnimationServerRpc();
         }
         shotTime += Time.deltaTime;
+    }
+    [ServerRpc]
+    private void TriggerShootAnimationServerRpc()
+    {
+        TriggerShootAnimationClientRpc();
+    }
+
+    [ClientRpc]
+    private void TriggerShootAnimationClientRpc()
+    {
+        if (!IsLocalPlayer) // Evita chamar duas vezes no local
+            animator.SetTrigger("Shoot");
     }
 
     void FixedUpdate()
@@ -105,10 +119,6 @@ public class PlayerController : NetworkBehaviour
     }
     [ClientRpc]
     public void BlinkClientRpc()
-    {
-        StartCoroutine(BlinkCoroutine());
-    }
-    public void Blink()
     {
         StartCoroutine(BlinkCoroutine());
     }

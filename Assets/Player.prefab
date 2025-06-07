@@ -222,12 +222,12 @@ GameObject:
   - component: {fileID: 345540312823923120}
   - component: {fileID: 3297100939336746699}
   - component: {fileID: 5805416568720018460}
+  - component: {fileID: 6003820218518208316}
   - component: {fileID: 536605437435840914}
   - component: {fileID: 4873408605420405187}
   - component: {fileID: 4737715975633903947}
   - component: {fileID: 7367852915492672884}
   - component: {fileID: 4701438915590320691}
-  - component: {fileID: 6003820218518208316}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -418,6 +418,23 @@ MonoBehaviour:
   playerSpriteRenderer: {fileID: 7130323508906661498}
   shotCooldown: 2
   useClientSidePrediction: 1
+--- !u!114 &6003820218518208316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4386936759598023362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdf62932c73674479171c54c65c7bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  bulletPrefabLocal: {fileID: 3353040013195762926, guid: 474aa4b32673e654ba894aa025007962, type: 3}
+  bulletPrefabNetwork: {fileID: 4926071954389098946, guid: 8bf13431a6c5b22409172b7326386813, type: 3}
+  firePoint: {fileID: 3776117186689584404}
+  bulletSpeed: 10
 --- !u!114 &536605437435840914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,23 +553,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   fill: {fileID: 3675472660924962192}
   health: {fileID: 4873408605420405187}
---- !u!114 &6003820218518208316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4386936759598023362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bdf62932c73674479171c54c65c7bf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  bulletPrefabLocal: {fileID: 3353040013195762926, guid: 474aa4b32673e654ba894aa025007962, type: 3}
-  bulletPrefabNetwork: {fileID: 4926071954389098946, guid: 8bf13431a6c5b22409172b7326386813, type: 3}
-  firePoint: {fileID: 3776117186689584404}
-  bulletSpeed: 10
 --- !u!1 &5216327192790582603
 GameObject:
   m_ObjectHideFlags: 0
